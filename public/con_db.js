@@ -1,12 +1,14 @@
-var mysql = require('mysql')
+var mysql = require('mysql2/promise')
 
 
-var con = mysql.createConnection(
+var con = mysql.createPool(
     {
         host : 'localhost',
         user : 'root',
         password : '12345',
-        database: "unilove"
+        database: "unilove",
+        waitForConnections: true,
+        connectionLimit: 10
     }
 )
 

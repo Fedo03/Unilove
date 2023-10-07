@@ -1,13 +1,16 @@
-var ne = document.querySelector("#ne")
-var ps = document.querySelector("#ps")
+var ned = document.querySelector("#ne")
+var psd = document.querySelector("#ps")
 var bt = document.querySelector("#bt")
 
 
 bt.addEventListener('click',function(){
+   var ne = ned.value
+   var ps = psd.value
    var data = {
     ne,
     ps
    }
+   console.log(ne + ps)
    console.log(data)
 
    var sendData = {
