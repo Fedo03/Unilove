@@ -43,3 +43,21 @@ function butt(name){
      
     return bt;
 }
+
+let params = (new URL(document.location)).searchParams;
+let userId = params.get("userId");
+console.log(userId)
+
+
+fetch("/dataBase?userId=" + userId).then(function(res){
+    return res.json()
+}).then((data) => {
+    console.log(data)
+})
+
+
+
+
+
+
+

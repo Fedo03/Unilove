@@ -22,29 +22,35 @@ ul.use(express.static('uploads'));
 
 
 
-ul.get('/uploads', function(req,res){
+ul.get('/uploads',  function(req,res){
    res.sendFile(path.resolve(__dirname + '/public/upload.html'))
+  
+   var {userId} = req.query
+   
 })
 
 ul.post('/uploads',uploads.single('image'), function(req,res){
    console.log('file uploaded')
    console.log(req.file)
+   var {userId} = req.query
    
    
    var {filename, path} = req.file
   
    console.log(filename)
    console.log(path)
+   console.log(userId)
+   async function picDB(){
 
-    var pat = "what"
-   con.getConnection(async (connection) => {
-      var insertpic = "INSERT INTO profile (picname, picpath) VALUES (?, ?)";
-      await connection.query(insertpic, [filename, path]);
-      
+   var connection = await con.getConnection()
+   
+      var insertpic = "INSERT INTO profile (picname, picpath, userId) VALUES (?, ?, ?)";
+      await connection.query(insertpic, [filename, path, userId]);
+   }
+   picDB()
         var uploaded =  true
         
-    } )
-    res.redirect('/')
+ res.redirect('/?userId='+ userId)
    })
 
      
@@ -92,9 +98,13 @@ ul.post("/login", dataBase.login ,function(req,res){
 })
 
 
-ul.get("/", function(req,res){
+ul.get("/",  function(req,res){
    res.sendFile(path.resolve(__dirname + "/public/home.html"))
 })
+
+ul.get("/dataBase",dataBase.picD , function(req,res){
+
+} )
 
 
 

@@ -47,11 +47,13 @@ var data = {
       body : JSON.stringify(potential)
 }
 
-/*let params = (new URL(document.location)).searchParams;
+let params = (new URL(document.location)).searchParams;
 let userId = params.get("userId");
-console.log(userId) */
+console.log(userId) 
 var url = '/prefer?userId='+userId 
 fetch(url, data)
+window.location.href = 'http://localhost:3002/uploads?userId='+ userId;
+
 })
 
 

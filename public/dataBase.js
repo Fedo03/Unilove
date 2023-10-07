@@ -64,20 +64,27 @@ async function picD(req,res, next){
   
   var connection =  await con.getConnection()
 
-  var select = "SELECT * FROM userprefer WHERE userId = ? "
- var [results] = await connection.query(select, userId)
-  var {uni,uni1,uni2} = results[0]
+   var joinUser = "SELECT userInfo.userId , userInfo.uni , userprefer.uni1 FROM userInfo INNER JOIN userprefer ON userInfo.userId = userprefer.userId WHERE userInfo.userId = ?"
+     var [joinResults] = await connection.query(joinUser, [userId])
+   
 
- var check = "SELECT * FROM userInfo WHERE uni =? OR uni =? OR uni =?"
- var [results] = await connection.query(check,[uni,uni1,uni2])
-
-    res.send(results)
+     var {uni , uni1}= joinResults[0]
+      console.log(uni)
+     var joinPro = "SELECT profile.picname , userInfo.name, userInfo.uni FROM userInfo INNER JOIN profile ON userInfo.userId = profile.userId WHERE userInfo.uni = ? OR userInfo.uni = ?"
+        var [preferedResults] = await connection.query(joinPro,[uni,uni1] )
+        console.log(preferedResults)
+         res.send(preferedResults)
+  
+ next()
 }
+
+
+//async function picUp(r)
 
 module.exports = { insert : insert,
                    prefer : prefer,
                    login : login ,
-                   picD : picD,
+                   picD : picD,  
                 }  
 
 
